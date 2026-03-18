@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | CineReserve</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        body {
+            margin: 0; font-family: 'Poppins', sans-serif; background: #0f0f0f;
+            background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover; height: 100vh; display: flex; justify-content: center; align-items: center;
+        }
+        .signup-card {
+            background: rgba(15, 15, 15, 0.95); padding: 40px; border-radius: 12px;
+            width: 100%; max-width: 420px; border-left: 5px solid #ffcc00;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+        .brand-name { color: #ffcc00; font-size: 28px; font-weight: 600; text-align: center; margin-bottom: 5px; letter-spacing: 1.5px; }
+        .subtitle { color: #888; font-size: 14px; text-align: center; margin-bottom: 30px; }
+        .form-group { margin-bottom: 18px; }
+        label { color: #eee; font-size: 12px; display: block; margin-bottom: 6px; text-transform: uppercase; }
+        input { width: 100%; padding: 12px; background: #222; border: 1px solid #333; border-radius: 6px; color: white; box-sizing: border-box; outline: none; }
+        input:focus { border-color: #ffcc00; }
+        .btn-register { width: 100%; padding: 14px; background: #ffcc00; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; margin-top: 15px; font-size: 15px; transition: 0.3s; }
+        .btn-register:hover { background: #e6b800; }
+        .login-prompt { text-align: center; color: #999; font-size: 13px; margin-top: 25px; }
+        .login-prompt a { color: #ffcc00; text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="signup-card">
+        <div class="brand-name">CINERESERVE</div>
+        <div class="subtitle">Experience movies like never before</div>
+        
+        <form method="POST" action="{% url 'signup' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Choose a username" required>
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" name="email" placeholder="john@example.com" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter password" required>
+            </div>
+            <button type="submit" class="btn-register">CREATE ACCOUNT</button>
+        </form>
+
+        <div class="login-prompt">
+            Already have an account? <a href="{% url 'login' %}">Login</a>
+        </div>
+    </div>
+</body>
+</html>

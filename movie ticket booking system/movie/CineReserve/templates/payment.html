@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment | CineReserve</title>
+    <style>
+        body {
+            background: #0a0a0a;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            background: #111;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ffcc00;
+            margin-bottom: 40px;
+        }
+
+        .logo { 
+            color: #ffcc00; 
+            font-weight: 600; 
+            font-size: 22px; 
+            text-decoration: none; 
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .left, .right {
+            background: #1a1a1a;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #333;
+        }
+
+        .left { width: 35%; }
+        .right { width: 65%; }
+
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+
+        .tab {
+            cursor: pointer;
+            padding: 8px 15px;
+            background: #333;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        .tab.active { 
+            background: #ffcc00; 
+            color: black; 
+            font-weight: bold; 
+        }
+
+        .content { display: none; }
+        .content.active { display: block; }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #000;
+            border: 1px solid #444;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .btn-pay {
+            width: 100%;
+            padding: 14px;
+            background: #ffcc00;
+            border: none;
+            margin-top: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .btn-pay:hover { background: #e6b800; }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <a href="{% url 'dashboard' %}" class="logo">CINERESERVE</a>
+    <!-- ❌ My Bookings button removed -->
+</header>
+
+<div class="container">
+    <div class="left">
+        <h3 style="color: #ffcc00;">Summary</h3>
+        <p>Movie: <strong>{{ request.GET.name|default:"Movie" }}</strong></p>
+        <p>Seats: <strong>{{ request.GET.seats|default:"0" }}</strong></p>
+        <p>Base Price: ₹{{ request.GET.total|default:"0" }}</p>
+        <hr style="border: 0; border-top: 1px solid #444;">
+        <h2 style="color: #ffcc00;">Total: ₹{{ request.GET.total|default:"0" }}</h2>
+    </div>
+
+    <div class="right">
+        <div class="tabs">
+            <div class="tab active" onclick="showTab(event,'upi')">UPI</div>
+            <div class="tab" onclick="showTab(event,'card')">Card</div>
+            <div class="tab" onclick="showTab(event,'cash')">Cash</div>
+        </div>
+
+        <form id="paymentForm" method="POST" action="{% url 'payment' %}">
+            {% csrf_token %}
+            <input type="hidden" name="movie_name" value="{{ request.GET.name }}">
+            <input type="hidden" name="seats_selected" value="{{ request.GET.seats }}">
+            <input type="hidden" name="total_amount" value="{{ request.GET.total }}">
+
+            <div id="upi" class="content active">
+                <input type="text" placeholder="Enter UPI ID (e.g. user@okaxis)">
+                <button type="submit" class="btn-pay">Pay & Confirm</button>
+            </div>
+
+            <div id="card" class="content">
+                <input type="text" placeholder="Card Number">
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" placeholder="MM/YY">
+                    <input type="password" placeholder="CVV">
+                </div>
+                <button type="submit" class="btn-pay">Pay & Confirm</button>
+            </div>
+
+            <div id="cash" class="content">
+                <p style="color: #aaa; font-size: 14px;">Pay at counter before show time to collect tickets.</p>
+                <button type="submit" class="btn-pay">Confirm Booking</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function showTab(event, id) {
+    document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.currentTarget.classList.add('active');
+}
+
+document.getElementById("paymentForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const movie = "{{ request.GET.name }}";
+    const seats = "{{ request.GET.seats }}";
+    const total = "{{ request.GET.total }}";
+
+    const booking = {
+        movie: movie,
+        seats: seats,
+        total: total,
+        date: new Date().toLocaleString()
+    };
+
+    let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+    bookings.push(booking);
+    localStorage.setItem("bookings", JSON.stringify(bookings));
+
+    alert("Payment Successful!");
+    window.location.href = "{% url 'dashboard' %}";
+});
+</script>
+
+</body>
+</html>

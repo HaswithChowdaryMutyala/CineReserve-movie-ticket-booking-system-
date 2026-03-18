@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings | CineReserve</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        body { margin: 0; font-family: 'Poppins', sans-serif; background: #0a0a0a; color: white; }
+        header { padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; background: #111; border-bottom: 2px solid #ffcc00; }
+        .logo { color: #ffcc00; font-weight: 600; font-size: 24px; text-decoration: none; }
+        .container { padding: 40px 5%; max-width: 900px; margin: auto; }
+        h2 { border-left: 4px solid #ffcc00; padding-left: 15px; margin-bottom: 30px; }
+        
+        .ticket-card {
+            background: #1a1a1a; border-radius: 12px; margin-bottom: 20px;
+            display: flex; overflow: hidden; border: 1px solid #333;
+            transition: 0.3s;
+        }
+        .ticket-card:hover { border-color: #ffcc00; }
+        .movie-poster { width: 120px; background: #222; display: flex; align-items: center; justify-content: center; font-size: 40px; }
+        .ticket-info { padding: 20px; flex-grow: 1; position: relative; }
+        .movie-title { color: #ffcc00; font-size: 20px; font-weight: 600; margin: 0; }
+        .details { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; font-size: 14px; color: #aaa; }
+        .status { position: absolute; top: 20px; right: 20px; background: #2d5a27; color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="{% url 'dashboard' %}" class="logo">CINERESERVE</a>
+        <div>Welcome, <strong>{{ user.username }}</strong></div>
+    </header>
+
+    <div class="container">
+        <h2>Your Bookings</h2>
+
+        {% if bookings %}
+            {% for booking in bookings %}
+            <div class="ticket-card">
+                <div class="movie-poster">🎬</div>
+                <div class="ticket-info">
+                    <span class="status">CONFIRMED</span>
+                    <p class="movie-title">{{ booking.movie_name }}</p>
+                    <div class="details">
+                        <div><span>Seats:</span> <strong style="color: white;">{{ booking.seats }}</strong></div>
+                        <div><span>Amount:</span> <strong style="color: white;">₹{{ booking.total_amount }}</strong></div>
+                        <div><span>Date:</span> {{ booking.timestamp|date:"D, d M Y" }}</div>
+                        <div><span>Booking ID:</span> #CR{{ booking.id }}</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div style="text-align: center; padding: 50px; color: #666;">
+                <p>No bookings found yet.</p>
+                <a href="{% url 'dashboard' %}" style="color: #ffcc00; text-decoration: none;">Browse Movies</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logged Out | CineReserve</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        body {
+            margin: 0; padding: 0; font-family: 'Poppins', sans-serif;
+            background: #0f0f0f; background-size: cover; height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+            background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1350&q=80');
+        }
+        .logout-card {
+            background: rgba(20, 20, 20, 0.95); padding: 50px; border-radius: 15px;
+            width: 100%; max-width: 400px; text-align: center;
+            border: 1px solid #333; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+        .icon { font-size: 50px; color: #ffcc00; margin-bottom: 20px; }
+        h2 { color: white; margin-bottom: 10px; font-weight: 600; }
+        p { color: #888; margin-bottom: 30px; font-size: 15px; }
+        .btn-relogin {
+            display: inline-block; width: 100%; padding: 14px;
+            background: #ffcc00; color: #000; text-decoration: none;
+            border-radius: 8px; font-weight: 600; transition: 0.3s;
+        }
+        .btn-relogin:hover { background: #e6b800; transform: scale(1.02); }
+    </style>
+</head>
+<body>
+    <div class="logout-card">
+        <div class="icon">👋</div>
+        <h2>You're Signed Out</h2>
+        <p>Thank you for using CineReserve. Your session has ended securely.</p>
+        
+        <a href="{% url 'login' %}" class="btn-relogin">LOG IN AGAIN</a>
+    </div>
+</body>
+</html>

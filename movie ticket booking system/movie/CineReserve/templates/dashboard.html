@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | CineReserve</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a0a;
+            color: white;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #111;
+            border-bottom: 2px solid #ffcc00;
+        }
+
+        .logo {
+            color: #ffcc00;
+            font-weight: 600;
+            font-size: 24px;
+            text-decoration: none;
+        }
+
+        .user-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logout-link {
+            color: #ffcc00;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        /* Container */
+        .container {
+            padding: 40px 5%;
+        }
+
+        h2 {
+            margin-bottom: 30px;
+            color: #eee;
+        }
+
+        /* Movie Grid */
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 30px;
+        }
+
+        .movie-card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: 0.3s;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-10px);
+            border-color: #ffcc00;
+            box-shadow: 0 10px 25px rgba(255, 204, 0, 0.2);
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+        }
+
+        .movie-info {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .movie-info h3 {
+            color: #ffcc00;
+            margin-bottom: 10px;
+        }
+
+        .btn-book {
+            display: block;
+            padding: 10px;
+            background: #ffcc00;
+            color: black;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-book:hover {
+            background: #e6b800;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <a href="{% url 'dashboard' %}" class="logo">CINERESERVE</a>
+
+    <div class="user-nav">
+        <div>
+            Welcome, <strong>{{ user.username }}</strong> |
+            <a href="{% url 'logout' %}" class="logout-link">Logout</a>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <h2>Now Showing</h2>
+
+    <div class="movie-grid">
+
+        <!-- Movie 1 -->
+        <div class="movie-card">
+            <img src="https://image2url.com/r2/default/images/1773650012004-099ad4f9-a7ea-4089-a49e-33f929f78034.jpg" alt="RRR">
+            <div class="movie-info">
+                <h3>RRR</h3>
+                <a href="{% url 'seats' %}?name=RRR" class="btn-book">Book Now</a>
+            </div>
+        </div>
+
+        <!-- Movie 2 -->
+        <div class="movie-card">
+            <img src="https://image2url.com/r2/default/images/1773650436578-8a3c0a9e-565e-4675-a1b1-b04a47f1d162.jpg" alt="Bahubali">
+            <div class="movie-info">
+                <h3>BAHUBALI</h3>
+                <a href="{% url 'seats' %}?name=BAHUBALI" class="btn-book">Book Now</a>
+            </div>
+        </div>
+
+        <!-- Movie 3 -->
+        <div class="movie-card">
+            <img src="https://image2url.com/r2/default/images/1773650872524-67bb1335-43e5-49ed-b145-225399df2afe.jpg" alt="Devara">
+            <div class="movie-info">
+                <h3>DEVARA</h3>
+                <a href="{% url 'seats' %}?name=DEVARA" class="btn-book">Book Now</a>
+            </div>
+        </div>
+
+        <!-- Movie 4 -->
+        <div class="movie-card">
+            <img src="https://image2url.com/r2/default/images/1773650520879-122b7f09-cb4c-46eb-981c-bd28b5e7bca0.jpg" alt="Pushpa">
+            <div class="movie-info">
+                <h3>PUSHPA</h3>
+                <a href="{% url 'seats' %}?name=PUSHPA" class="btn-book">Book Now</a>
+            </div>
+        </div>
+
+        <!-- Movie 5 -->
+        <div class="movie-card">
+            <img src="https://image2url.com/r2/default/images/1773654105488-99c44f97-c5d2-4551-a09f-7cc070b04c22.jpg" alt="Dhurandhar 2">
+            <div class="movie-info">
+                <h3>DHURANDHAR 2</h3>
+                <a href="{% url 'seats' %}?name=DHURANDHAR 2" class="btn-book">Book Now</a>
+            </div>
+        </div>
+
+        <!-- Movie 6 -->
+        <div class="movie-card">
+            <img src="https://image2url.com/r2/default/images/1773650659850-bb146436-bbde-4e17-a552-747c9ac271aa.jpg" alt="Varanasi">
+            <div class="movie-info">
+                <h3>VARANASI</h3>
+                <a href="{% url 'seats' %}?name=VARANASI" class="btn-book">Book Now</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
